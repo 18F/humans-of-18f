@@ -7,7 +7,9 @@
   "files": [
     "typings/react.d.ts",
     "typings/react-dom.d.ts",
-    "lib/main.tsx"
+    "typings/es6-promise.d.ts",
+    "lib/main.tsx",
+    "lib/team.ts"
   ],
   "exclude": [
     "node_modules"
