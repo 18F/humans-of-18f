@@ -5,6 +5,7 @@ module.exports = {
     'main': './lib/main.tsx'
   },
   output: {
+    path: __dirname + '/static',
     filename: '[name].bundle.js'
   },
   resolve: {
