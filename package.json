@@ -14,7 +14,7 @@
     "webpack-dev-server": "^1.14.1"
   },
   "scripts": {
-    "start": "webpack-dev-server --host 0.0.0.0",
+    "start": "webpack-dev-server --host 0.0.0.0 --content-base static/",
     "bundle": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
