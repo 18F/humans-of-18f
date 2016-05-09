@@ -13,7 +13,11 @@ class App extends React.Component<Props, State> {
   }
 }
 
-ReactDOM.render(
-  <App/>,
-  document.getElementById('app')
-);
+function init() {
+  ReactDOM.render(
+    <App/>,
+    document.getElementById('app')
+  );
+}
+
+window.addEventListener('load', init, false);
