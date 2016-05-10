@@ -9,6 +9,7 @@
     "typings/react-dom.d.ts",
     "typings/es6-promise.d.ts",
     "lib/main.tsx",
+    "lib/profile.tsx",
     "lib/multiple-choices.tsx",
     "lib/team.ts"
   ],
