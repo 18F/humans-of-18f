@@ -3,14 +3,14 @@ import {Promise} from 'es6-promise';
 const TEAM_URL = 'team.json';
 
 export interface TeamMember {
-  full_name: String,
-  image: String,
-  github: String,
-  location?: String,
-  bio?: String,
+  full_name: string,
+  image: string,
+  github: string,
+  location?: string,
+  bio?: string,
   // These dates are formatted as YYYY-MM-DD.
-  start_date: String,
-  end_date: String
+  start_date: string,
+  end_date: string
 }
 
 export function get(): Promise<TeamMember[]> {

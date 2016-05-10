@@ -73,10 +73,17 @@ export default class MultipleChoices extends React.Component<Props, State> {
   }
 
   render() {
+    let location = (
+      <a href={"https://duckduckgo.com/?q=" +
+               encodeURIComponent(this.props.answer.location) +
+               "+airport&ia=about"}
+         target="_blank">{this.props.answer.location}</a>
+    );
+
     return (
       <div className="multiple-choice-question">
         <img className="avatar" src={this.props.answer.image}/>
-        <p>Who is this human?</p>
+        <p>Who is this human from {location}?</p>
         <div>
           {this.state.currentChoices.map((member, i) => {
             let hasBeenChosen = this.state.chosenChoices[i];
