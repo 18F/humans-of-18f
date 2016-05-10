@@ -1,6 +1,7 @@
 import React = require('react');
 import ReactDOM = require('react-dom');
 
+import MultipleChoices from './multiple-choices';
 import * as Util from './util';
 import * as Team from './team';
 
@@ -13,20 +14,18 @@ interface Props {
 //
 // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/4809
 interface State {
-  currentMember?: Team.TeamMember,
   teamMembers?: Team.TeamMember[],
-  currentChoices?: Team.TeamMember[],
-  chosenChoices: boolean[]
+  currentMember?: Team.TeamMember,
+  currentChoices?: Team.TeamMember[]
 }
 
 class App extends React.Component<Props, State> {
   NUM_CHOICES = 4;
 
   state = {
-    currentMember: null,
     teamMembers: [],
-    currentChoices: [],
-    chosenChoices: []
+    currentMember: null,
+    currentChoices: []
   };
 
   setNewQuestion(members: Team.TeamMember[], numChoices: number) {
@@ -35,9 +34,14 @@ class App extends React.Component<Props, State> {
     this.setState({
       teamMembers: members,
       currentMember: member,
-      currentChoices: Util.multipleChoices(member, members, numChoices),
-      chosenChoices: Util.filledArray(numChoices, false)
+      currentChoices: Util.multipleChoices(member, members, numChoices)
     });
+  }
+
+  handleCorrectAnswerChosen = () => {
+    let members = Util.without(this.state.teamMembers,
+                               this.state.currentMember);
+    this.setNewQuestion(members, this.NUM_CHOICES);
   }
 
   componentDidMount() {
@@ -50,44 +54,16 @@ class App extends React.Component<Props, State> {
     });
   }
 
-  handleChoiceClick = (member, i) => {
-    if (member === this.state.currentMember) {
-      this.setNewQuestion(Util.without(this.state.teamMembers,
-                                       this.state.currentMember),
-                          this.NUM_CHOICES);
-    } else {
-      let chosenChoices = this.state.chosenChoices.slice();
-      chosenChoices[i] = true;
-      this.setState({ chosenChoices: chosenChoices });
-    }
-  }
-
   render() {
     let content = <span>{"Loading\u2026"}</span>;
 
     if (this.state.currentMember) {
-      content = (
-        <div className="multiple-choice-question">
-          <img className="portrait" src={this.state.currentMember.image}/>
-          <p>Who is this human?</p>
-          <div>
-            {this.state.currentChoices.map((member, i) => {
-              let hasBeenChosen = this.state.chosenChoices[i];
-              let className = hasBeenChosen ? "usa-button-disabled"
-                                            : "usa-button-primary-alt";
-
-              return (
-                <div className="button_wrapper">
-                <button className={className} key={i} disabled={hasBeenChosen}
-                        onClick={this.handleChoiceClick.bind(this, member, i)}>
-                  {member.full_name}
-                </button>
-                </div>
-              );
-            })}
-          </div>
-        </div>
-      );
+      content = <MultipleChoices
+        teamMembers={this.state.teamMembers}
+        currentMember={this.state.currentMember}
+        currentChoices={this.state.currentChoices}
+        onCorrectAnswerChosen={this.handleCorrectAnswerChosen}
+      />;
     }
 
     return (
