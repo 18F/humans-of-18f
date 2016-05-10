@@ -4,8 +4,8 @@ import * as Util from './util';
 import * as Team from './team';
 
 interface Props {
-  currentMember: Team.TeamMember,
-  teamMembers: Team.TeamMember[],
+  answer: Team.TeamMember,
+  choicePool: Team.TeamMember[],
   numChoices: number,
   onCorrectAnswerChosen: () => void
 }
@@ -42,7 +42,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
   };
 
   handleChoiceClick = (member, i) => {
-    if (member === this.props.currentMember) {
+    if (member === this.props.answer) {
       this.props.onCorrectAnswerChosen();
     } else {
       let chosenChoices = this.state.chosenChoices.slice();
@@ -54,8 +54,8 @@ export default class MultipleChoices extends React.Component<Props, State> {
   resetState(props: Props) {
     this.setState({
       currentChoices: chooseMany(
-        props.currentMember,
-        props.teamMembers,
+        props.answer,
+        props.choicePool,
         props.numChoices
       ),
       chosenChoices: Util.filledArray(this.props.numChoices, false)
@@ -67,7 +67,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
   }
 
   componentWillReceiveProps(nextProps: Props) {
-    if (nextProps.currentMember !== this.props.currentMember) {
+    if (nextProps.answer !== this.props.answer) {
       this.resetState(nextProps);
     }
   }
@@ -75,7 +75,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
   render() {
     return (
       <div className="multiple-choice-question">
-        <img className="portrait" src={this.props.currentMember.image}/>
+        <img className="portrait" src={this.props.answer.image}/>
         <p>Who is this human?</p>
         <div>
           {this.state.currentChoices.map((member, i) => {

@@ -52,8 +52,8 @@ class App extends React.Component<Props, State> {
 
     if (this.state.currentMember) {
       content = <MultipleChoices
-        teamMembers={this.state.teamMembers}
-        currentMember={this.state.currentMember}
+        choicePool={this.state.teamMembers}
+        answer={this.state.currentMember}
         numChoices={this.NUM_CHOICES}
         onCorrectAnswerChosen={this.handleCorrectAnswerChosen}
       />;
