@@ -66,7 +66,7 @@ class App extends React.Component<Props, State> {
     if (this.state.currentMember) {
       content = (
         <div className="multiple-choice-question">
-          <img src={this.state.currentMember.image}/>
+          <img className="portrait" src={this.state.currentMember.image}/>
           <p>Who is this human?</p>
           <div>
             {this.state.currentChoices.map((member, i) => {
@@ -90,10 +90,12 @@ class App extends React.Component<Props, State> {
 
     return (
       <div className="usa-grid">
-        <div className="usa-grid-one-whole">
+        <div className="usa-width-one-third">&nbsp;</div>
+        <div className="usa-width-one-third">
           <h1>Humans of 18F</h1>
           {content}
         </div>
+        <div className="usa-width-one-third">&nbsp;</div>
       </div>
     );
   }

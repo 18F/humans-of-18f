@@ -1,3 +1,11 @@
+.multiple-choice-question p {
+  text-align: center;
+}
+
+.multiple-choice-question .portrait {
+  width: 100%;
+}
+
 .multiple-choice-question button {
   width: 100%;
 }
