@@ -1,5 +1,10 @@
 import {Promise} from 'es6-promise';
 
+// TODO: This might actually be at
+// https://team-api.18f.gov/public/api/team/. Note that it doesn't
+// have direct links to avatars, but does contain github username info,
+// so we can potentially ask github for their avatar...
+
 const BASE_URL = 'https://18f.gsa.gov/hub/';
 const TEAM_URL = BASE_URL + 'api/team/';
 const NO_IMG = BASE_URL + 'assets/images/team/logo-18f.jpg';
