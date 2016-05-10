@@ -52,7 +52,9 @@ class App extends React.Component<Props, State> {
 
   handleChoiceClick = (member, i) => {
     if (member === this.state.currentMember) {
-      this.setNewQuestion(this.state.teamMembers, this.NUM_CHOICES);
+      this.setNewQuestion(Util.without(this.state.teamMembers,
+                                       this.state.currentMember),
+                          this.NUM_CHOICES);
     } else {
       let chosenChoices = this.state.chosenChoices.slice();
       chosenChoices[i] = true;
