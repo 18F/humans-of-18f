@@ -89,13 +89,19 @@ class App extends React.Component<Props, State> {
     }
 
     return (
-      <div className="usa-grid">
-        <div className="usa-width-one-third">&nbsp;</div>
-        <div className="usa-width-one-third">
-          <h1>Humans of 18F</h1>
-          {content}
+      <div>
+        <div className="usa-grid">
+          <div className="usa-width-one-whole">
+            <h1>Humans of 18F</h1>
+          </div>
         </div>
-        <div className="usa-width-one-third">&nbsp;</div>
+        <div className="usa-grid">
+          <div className="usa-width-one-third">&nbsp;</div>
+          <div className="usa-width-one-third">
+            {content}
+          </div>
+          <div className="usa-width-one-third">&nbsp;</div>
+        </div>
       </div>
     );
   }
