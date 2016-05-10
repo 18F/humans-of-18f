@@ -11,7 +11,7 @@ npm start
 
 Then browse to http://localhost:8080/.
 
-### TypeScript Editor Support
+### TypeScript editor support
 
 While it's not required for making changes to the codebase, I
 *highly* recommend adding [TypeScript Editor Support][] to your editor
