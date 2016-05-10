@@ -16,6 +16,7 @@
   },
   "scripts": {
     "start": "webpack-dev-server --host 0.0.0.0 --content-base static/",
+    "update-team": "curl https://team-api.18f.gov/public/api/team/ | python -m json.tool > static/team.json",
     "bundle": "webpack",
     "test": "echo \"Error: no test specified\" && exit 1"
   },

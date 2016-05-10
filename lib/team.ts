@@ -1,23 +1,16 @@
 import {Promise} from 'es6-promise';
 
-// TODO: This might actually be at
-// https://team-api.18f.gov/public/api/team/. Note that it doesn't
-// have direct links to avatars, but does contain github username info,
-// so we can potentially ask github for their avatar...
-
-const BASE_URL = 'https://18f.gsa.gov/hub/';
-const TEAM_URL = BASE_URL + 'api/team/';
-const NO_IMG = BASE_URL + 'assets/images/team/logo-18f.jpg';
+const TEAM_URL = 'team.json';
 
 export interface TeamMember {
   full_name: String,
   image: String,
+  github: String,
   location?: String,
   bio?: String,
-  working_groups?: String[],
-  projects?: String[],
-  skills?: String[],
-  interests?: String[]
+  // These dates are formatted as YYYY-MM-DD.
+  start_date: String,
+  end_date: String
 }
 
 export function get(): Promise<TeamMember[]> {
@@ -30,16 +23,17 @@ export function get(): Promise<TeamMember[]> {
         return reject(new Error("Got HTTP " + req.status));
       }
 
-      let team = JSON.parse(req.responseText);
+      let members = JSON.parse(req.responseText).results as TeamMember[];
 
-      let members = Object.keys(team).map((name) => {
-        let member = team[name] as TeamMember;
+      members = members.filter(member => {
+        // TODO: Filter out users who are no longer at 18F, if any exist.
 
-        member.image = BASE_URL + member.image;
+        return !!member.github;
+      }).map(member => {
+        // http://stackoverflow.com/a/36380674
+        member.image = 'https://github.com/' + member.github + '.png';
 
         return member;
-      }).filter((member) => {
-        return member.image !== NO_IMG;
       });
 
       resolve(members);
