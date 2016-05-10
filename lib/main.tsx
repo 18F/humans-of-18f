@@ -65,20 +65,22 @@ class App extends React.Component<Props, State> {
 
     if (this.state.currentMember) {
       content = (
-        <div>
+        <div className="multiple-choice-question">
           <img src={this.state.currentMember.image}/>
           <p>Who is this human?</p>
-          <div className="button_wrapper">
+          <div>
             {this.state.currentChoices.map((member, i) => {
               let hasBeenChosen = this.state.chosenChoices[i];
               let className = hasBeenChosen ? "usa-button-disabled"
                                             : "usa-button-primary-alt";
 
               return (
+                <div className="button_wrapper">
                 <button className={className} key={i} disabled={hasBeenChosen}
                         onClick={this.handleChoiceClick.bind(this, member, i)}>
                   {member.full_name}
                 </button>
+                </div>
               );
             })}
           </div>
@@ -87,9 +89,11 @@ class App extends React.Component<Props, State> {
     }
 
     return (
-      <div>
-        <h1>Humans of 18F</h1>
-        {content}
+      <div className="usa-grid">
+        <div className="usa-grid-one-whole">
+          <h1>Humans of 18F</h1>
+          {content}
+        </div>
       </div>
     );
   }
