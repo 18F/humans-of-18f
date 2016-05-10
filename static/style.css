@@ -2,12 +2,12 @@ h1 {
   text-align: center;
 }
 
-.multiple-choice-question p {
-  text-align: center;
+.portrait {
+  width: 100%;
 }
 
-.multiple-choice-question .portrait {
-  width: 100%;
+.multiple-choice-question p {
+  text-align: center;
 }
 
 .multiple-choice-question button {
