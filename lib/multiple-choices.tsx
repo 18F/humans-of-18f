@@ -15,6 +15,26 @@ interface State {
   chosenChoices: boolean[]
 }
 
+function chooseMany<T>(answer: T, choicePool: T[], numChoices: number): T[] {
+  let choices = new Array(numChoices);
+
+  choices[Util.randomIndex(choices)] = answer;
+
+  choicePool = Util.without(choicePool, answer);
+
+  for (let i = 0; i < numChoices; i++) {
+    if (choices[i] === answer) {
+      continue;
+    }
+
+    choices[i] = Util.randomChoice(choicePool);
+
+    choicePool = Util.without(choicePool, choices[i]);
+  }
+
+  return choices;
+}
+
 export default class MultipleChoices extends React.Component<Props, State> {
   state = {
     currentChoices: [],
@@ -33,7 +53,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
 
   resetState(props: Props) {
     this.setState({
-      currentChoices: Util.multipleChoices(
+      currentChoices: chooseMany(
         props.currentMember,
         props.teamMembers,
         props.numChoices

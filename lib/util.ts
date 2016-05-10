@@ -29,24 +29,3 @@ export function without<T>(list: T[], item: T) {
 export function randomChoice<T>(list: T[]): T {
   return list[randomIndex(list)];
 }
-
-export function multipleChoices<T>(answer: T, choicePool: T[],
-                                   numChoices: number): T[] {
-  let choices = new Array(numChoices);
-
-  choices[randomIndex(choices)] = answer;
-
-  choicePool = without(choicePool, answer);
-
-  for (let i = 0; i < numChoices; i++) {
-    if (choices[i] === answer) {
-      continue;
-    }
-
-    choices[i] = randomChoice(choicePool);
-
-    choicePool = without(choicePool, choices[i]);
-  }
-
-  return choices;
-}
