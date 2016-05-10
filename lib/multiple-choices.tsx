@@ -75,7 +75,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
   render() {
     return (
       <div className="multiple-choice-question">
-        <img className="portrait" src={this.props.answer.image}/>
+        <img className="avatar" src={this.props.answer.image}/>
         <p>Who is this human?</p>
         <div>
           {this.state.currentChoices.map((member, i) => {
