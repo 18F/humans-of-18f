@@ -15,8 +15,7 @@ interface Props {
 // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/4809
 interface State {
   teamMembers?: Team.TeamMember[],
-  currentMember?: Team.TeamMember,
-  currentChoices?: Team.TeamMember[]
+  currentMember?: Team.TeamMember
 }
 
 class App extends React.Component<Props, State> {
@@ -24,24 +23,17 @@ class App extends React.Component<Props, State> {
 
   state = {
     teamMembers: [],
-    currentMember: null,
-    currentChoices: []
+    currentMember: null
   };
 
-  setNewQuestion(members: Team.TeamMember[], numChoices: number) {
-    let member = Util.randomChoice(members);
-
-    this.setState({
-      teamMembers: members,
-      currentMember: member,
-      currentChoices: Util.multipleChoices(member, members, numChoices)
-    });
+  setNewQuestion(members: Team.TeamMember[]) {
+    this.setState({ currentMember: Util.randomChoice(members) });
   }
 
   handleCorrectAnswerChosen = () => {
     let members = Util.without(this.state.teamMembers,
                                this.state.currentMember);
-    this.setNewQuestion(members, this.NUM_CHOICES);
+    this.setNewQuestion(members);
   }
 
   componentDidMount() {
@@ -50,7 +42,8 @@ class App extends React.Component<Props, State> {
 
     // TODO: Handle errors.
     Team.get().then((members) => {
-      this.setNewQuestion(members, this.NUM_CHOICES);
+      this.setState({ teamMembers: members });
+      this.setNewQuestion(members);
     });
   }
 
@@ -61,7 +54,7 @@ class App extends React.Component<Props, State> {
       content = <MultipleChoices
         teamMembers={this.state.teamMembers}
         currentMember={this.state.currentMember}
-        currentChoices={this.state.currentChoices}
+        numChoices={this.NUM_CHOICES}
         onCorrectAnswerChosen={this.handleCorrectAnswerChosen}
       />;
     }

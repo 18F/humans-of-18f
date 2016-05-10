@@ -6,16 +6,18 @@ import * as Team from './team';
 interface Props {
   currentMember: Team.TeamMember,
   teamMembers: Team.TeamMember[],
-  currentChoices: Team.TeamMember[],
+  numChoices: number,
   onCorrectAnswerChosen: () => void
 }
 
 interface State {
+  currentChoices?: Team.TeamMember[],
   chosenChoices: boolean[]
 }
 
 export default class MultipleChoices extends React.Component<Props, State> {
   state = {
+    currentChoices: [],
     chosenChoices: []
   };
 
@@ -29,21 +31,24 @@ export default class MultipleChoices extends React.Component<Props, State> {
     }
   }
 
-  resetState() {
-    let numChoices = this.props.currentChoices.length;
-
+  resetState(props: Props) {
     this.setState({
-      chosenChoices: Util.filledArray(numChoices, false)
+      currentChoices: Util.multipleChoices(
+        props.currentMember,
+        props.teamMembers,
+        props.numChoices
+      ),
+      chosenChoices: Util.filledArray(this.props.numChoices, false)
     });
   }
 
   componentWillMount() {
-    this.resetState();
+    this.resetState(this.props);
   }
 
   componentWillReceiveProps(nextProps: Props) {
     if (nextProps.currentMember !== this.props.currentMember) {
-      this.resetState();
+      this.resetState(nextProps);
     }
   }
 
@@ -53,7 +58,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
         <img className="portrait" src={this.props.currentMember.image}/>
         <p>Who is this human?</p>
         <div>
-          {this.props.currentChoices.map((member, i) => {
+          {this.state.currentChoices.map((member, i) => {
             let hasBeenChosen = this.state.chosenChoices[i];
             let className = hasBeenChosen ? "usa-button-disabled"
                                           : "usa-button-primary-alt";
