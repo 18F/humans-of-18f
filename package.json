@@ -18,7 +18,7 @@
     "start": "webpack-dev-server --host 0.0.0.0 --content-base static/",
     "update-team": "curl https://team-api.18f.gov/public/api/team/ | python -m json.tool > static/team.json",
     "bundle": "webpack",
-    "deploy": "sh ./update-gh-pages.sh",
+    "deploy": "sh ./update-18f-pages.sh",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "author": "",
