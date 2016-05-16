@@ -8,9 +8,8 @@ export interface TeamMember {
   github: string,
   location?: string,
   bio?: string,
-  // These dates are formatted as YYYY-MM-DD.
-  start_date: string,
-  end_date: string
+  start_date: Date,
+  end_date?: Date
 }
 
 export function get(): Promise<TeamMember[]> {
@@ -23,17 +22,34 @@ export function get(): Promise<TeamMember[]> {
         return reject(new Error("Got HTTP " + req.status));
       }
 
-      let members = JSON.parse(req.responseText).results as TeamMember[];
+      let members = JSON.parse(req.responseText).results;
+      let now = new Date();
 
       members = members.filter(member => {
-        // TODO: Filter out users who are no longer at 18F, if any exist.
-
         return !!member.github;
       }).map(member => {
         // http://stackoverflow.com/a/36380674
         member.image = 'https://github.com/' + member.github + '.png';
 
+        // These dates are formatted as YYYY-MM-DD (ISO 8601 dates).
+        member.start_date = Date.parse(member.start_date);
+
+        if (member.end_date) {
+          // http://stackoverflow.com/a/22914738
+          member.end_date = new Date(member.end_date);
+        }
+
         return member;
+      }).filter((member: TeamMember) => {
+        let has_left = member.end_date && member.end_date < now;
+
+        if (has_left) {
+          console.log(member.full_name + " left on " + member.end_date);
+        }
+
+        // TODO: This seems inaccurate/out of date so we'll disable for now.
+        // return !has_left;
+        return true;
       });
 
       resolve(members);
