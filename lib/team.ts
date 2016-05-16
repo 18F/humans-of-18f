@@ -1,6 +1,7 @@
 import {Promise} from 'es6-promise';
 
 const TEAM_URL = 'team.json';
+const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
 
 export interface TeamMember {
   full_name: string,
@@ -23,7 +24,7 @@ export function get(): Promise<TeamMember[]> {
       }
 
       let members = JSON.parse(req.responseText).results;
-      let now = new Date();
+      let severalWeeksAgo = Date.now() - MS_PER_WEEK * 8;
 
       members = members.filter(member => {
         return !!member.github;
@@ -41,15 +42,20 @@ export function get(): Promise<TeamMember[]> {
 
         return member;
       }).filter((member: TeamMember) => {
-        let has_left = member.end_date && member.end_date < now;
+        if (!member.end_date) {
+          return true;
+        }
+
+        // We'll only filter out folks who have left several weeks ago,
+        // b/c sometimes 18F'ers have re-upped their employment but the
+        // Team API hasn't been updated to reflect it yet.
+        let has_left = member.end_date.getTime() < severalWeeksAgo;
 
         if (has_left) {
           console.log(member.full_name + " left on " + member.end_date);
         }
 
-        // TODO: This seems inaccurate/out of date so we'll disable for now.
-        // return !has_left;
-        return true;
+        return !has_left;
       });
 
       resolve(members);
