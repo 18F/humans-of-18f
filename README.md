@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/18F/humans-of-18f.svg?branch=master)](https://travis-ci.org/18F/humans-of-18f)
+
 This is a simple quiz to help you learn who everybody at 18F is.
 
 ### Quick start
