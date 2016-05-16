@@ -20,6 +20,7 @@ cd ..
 echo "Copying files in working dir to ./website/."
 
 cp -r static/* website
+cp .travis.yml website
 
 echo "Staging new/changed files."
 
