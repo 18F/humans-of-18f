@@ -13,6 +13,9 @@ module.exports = {
     extensions: ['', '.webpack.js', '.web.js', '.ts', '.tsx', '.js']
   },
   devtool: 'eval',
+  plugins: [
+      require('webpack-fail-plugin')
+  ],
   module: {
     loaders: [
       // all files with a `.ts` or `.tsx` extension will be handled by `ts-loader`
