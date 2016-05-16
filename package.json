@@ -19,7 +19,7 @@
     "update-team": "curl https://team-api.18f.gov/public/api/team/ | python -m json.tool > static/team.json",
     "bundle": "webpack",
     "deploy": "sh ./update-18f-pages.sh",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "npm run bundle && echo 'Yay, it compiles.'"
   },
   "author": "",
   "license": "ISC"
