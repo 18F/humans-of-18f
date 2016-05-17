@@ -6,6 +6,10 @@ h1 {
   width: 100%;
 }
 
+.learn-more {
+  text-align: center;
+}
+
 .multiple-choice-question p {
   text-align: center;
 }
