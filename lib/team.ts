@@ -33,7 +33,7 @@ export function get(): Promise<TeamMember[]> {
         member.image = 'https://github.com/' + member.github + '.png';
 
         // These dates are formatted as YYYY-MM-DD (ISO 8601 dates).
-        member.start_date = Date.parse(member.start_date);
+        member.start_date = new Date(member.start_date);
 
         if (member.end_date) {
           // http://stackoverflow.com/a/22914738

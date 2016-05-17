@@ -3,6 +3,21 @@ import React = require('react');
 import * as Util from './util';
 import * as Team from './team';
 
+const MONTHS = [
+  "January",
+  "February",
+  "March",
+  "April",
+  "May",
+  "June",
+  "July",
+  "August",
+  "September",
+  "October",
+  "November",
+  "December"
+];
+
 interface Props {
   answer: Team.TeamMember,
   choicePool: Team.TeamMember[],
@@ -73,17 +88,20 @@ export default class MultipleChoices extends React.Component<Props, State> {
   }
 
   render() {
+    let answer = this.props.answer;
     let location = (
       <a href={"https://duckduckgo.com/?q=" +
-               encodeURIComponent(this.props.answer.location) +
+               encodeURIComponent(answer.location) +
                "+airport&ia=about"}
-         target="_blank">{this.props.answer.location}</a>
+         target="_blank">{answer.location}</a>
     );
+    let startDate = MONTHS[answer.start_date.getMonth()] + " " +
+                    answer.start_date.getFullYear();
 
     return (
       <div className="multiple-choice-question">
-        <img className="avatar" src={this.props.answer.image}/>
-        <p>Who is this human from {location}?</p>
+        <img className="avatar" src={answer.image}/>
+        <p>Who is this human from {location} who joined in {startDate}?</p>
         <div>
           {this.state.currentChoices.map((member, i) => {
             let hasBeenChosen = this.state.chosenChoices[i];
