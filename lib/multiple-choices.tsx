@@ -97,6 +97,19 @@ export default class MultipleChoices extends React.Component<Props, State> {
     );
     let startDate = MONTHS[answer.start_date.getMonth()] + " " +
                     answer.start_date.getFullYear();
+    let pifInfo = null;
+
+    if (answer.pif_round) {
+      pifInfo = (
+        <p>
+          <small>
+            Disclaimer: This person is, or has once been, a <abbr
+            title="Presidential Innovation Fellow">PIF</abbr>, and may not
+            actually be part of 18F.
+          </small>
+        </p>
+      );
+    }
 
     return (
       <div className="multiple-choice-question">
@@ -118,6 +131,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
             );
           }) }
         </div>
+        {pifInfo}
       </div>
     );
   }

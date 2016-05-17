@@ -9,6 +9,7 @@ export interface TeamMember {
   github: string,
   location?: string,
   bio?: string,
+  pif_round?: number,
   start_date: Date,
   end_date?: Date
 }
@@ -38,6 +39,10 @@ export function get(): Promise<TeamMember[]> {
         if (member.end_date) {
           // http://stackoverflow.com/a/22914738
           member.end_date = new Date(member.end_date);
+        }
+
+        if ('pif-round' in member) {
+          member.pif_round = member['pif-round'];
         }
 
         return member;
