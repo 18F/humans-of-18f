@@ -28,7 +28,8 @@ interface Props {
 interface State {
   currentChoices?: Team.TeamMember[],
   chosenChoices?: boolean[],
-  isLearningMore?: boolean
+  isLearningMore?: boolean,
+  isAvatarLoading?: boolean
 }
 
 function chooseMany<T>(answer: T, choicePool: T[], numChoices: number): T[] {
@@ -55,8 +56,13 @@ export default class MultipleChoices extends React.Component<Props, State> {
   state = {
     currentChoices: [],
     chosenChoices: [],
-    isLearningMore: false
+    isLearningMore: false,
+    isAvatarLoading: true
   };
+
+  handleAvatarLoad = () => {
+    this.setState({ isAvatarLoading: false });
+  }
 
   handleLearnMoreClick = () => {
     this.setState({ isLearningMore: true });
@@ -80,7 +86,8 @@ export default class MultipleChoices extends React.Component<Props, State> {
         props.numChoices
       ),
       chosenChoices: Util.filledArray(this.props.numChoices, false),
-      isLearningMore: false
+      isLearningMore: false,
+      isAvatarLoading: true
     });
   }
 
@@ -106,6 +113,11 @@ export default class MultipleChoices extends React.Component<Props, State> {
                     answer.start_date.getFullYear();
     let pifInfo = null;
     let content = null;
+    let avatarClassName = "avatar";
+
+    if (this.state.isAvatarLoading) {
+      avatarClassName += " loading";
+    }
 
     if (answer.pif_round) {
       pifInfo = (
@@ -176,7 +188,8 @@ export default class MultipleChoices extends React.Component<Props, State> {
 
     return (
       <div className="multiple-choice-question">
-        <img className="avatar" src={answer.image}/>
+        <img className={avatarClassName} src={answer.image}
+             onLoad={this.handleAvatarLoad} />
         {content}
         {pifInfo}
       </div>
