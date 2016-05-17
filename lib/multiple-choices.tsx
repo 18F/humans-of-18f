@@ -143,7 +143,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
       content = (
         <div className="learn-more">
           <h2>{answer.full_name}</h2>
-          <p>{name} is from {location} and joined in {startDate}.</p>
+          <p>This human is from {location} and joined in {startDate}.</p>
           <p>{name} is <a href={gitHubURL}
                           target="_blank">@{answer.github}</a> on GitHub.
           </p>
