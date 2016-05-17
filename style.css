@@ -2,6 +2,10 @@ h1 {
   text-align: center;
 }
 
+.avatar.loading {
+  display: none;
+}
+
 .avatar {
   width: 100%;
 }
