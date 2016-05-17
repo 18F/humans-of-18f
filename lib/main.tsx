@@ -15,7 +15,8 @@ interface Props {
 // https://github.com/DefinitelyTyped/DefinitelyTyped/pull/4809
 interface State {
   teamMembers?: Team.TeamMember[],
-  currentMember?: Team.TeamMember
+  currentMember?: Team.TeamMember,
+  loadingMessage?: string
 }
 
 class App extends React.Component<Props, State> {
@@ -23,7 +24,8 @@ class App extends React.Component<Props, State> {
 
   state = {
     teamMembers: [],
-    currentMember: null
+    currentMember: null,
+    loadingMessage: "Loading\u2026"
   };
 
   setNewQuestion(members: Team.TeamMember[]) {
@@ -40,15 +42,20 @@ class App extends React.Component<Props, State> {
     // TODO: Deal with case where component is unmounted before
     // the promise is fulfilled.
 
-    // TODO: Handle errors.
     Team.get().then((members) => {
       this.setState({ teamMembers: members });
       this.setNewQuestion(members);
+    }).catch(e => {
+      console.log(e);
+      this.setState({
+        currentMember: null,
+        loadingMessage: "Alas, an error has occurred."
+      });
     });
   }
 
   render() {
-    let content = <span>{"Loading\u2026"}</span>;
+    let content = <span>{this.state.loadingMessage}</span>;
 
     if (this.state.currentMember) {
       content = <MultipleChoices
