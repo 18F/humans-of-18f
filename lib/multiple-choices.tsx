@@ -27,7 +27,8 @@ interface Props {
 
 interface State {
   currentChoices?: Team.TeamMember[],
-  chosenChoices: boolean[]
+  chosenChoices?: boolean[],
+  isLearningMore?: boolean
 }
 
 function chooseMany<T>(answer: T, choicePool: T[], numChoices: number): T[] {
@@ -53,8 +54,13 @@ function chooseMany<T>(answer: T, choicePool: T[], numChoices: number): T[] {
 export default class MultipleChoices extends React.Component<Props, State> {
   state = {
     currentChoices: [],
-    chosenChoices: []
+    chosenChoices: [],
+    isLearningMore: false
   };
+
+  handleLearnMoreClick = () => {
+    this.setState({ isLearningMore: true });
+  }
 
   handleChoiceClick = (member, i) => {
     if (member === this.props.answer) {
@@ -73,7 +79,8 @@ export default class MultipleChoices extends React.Component<Props, State> {
         props.choicePool,
         props.numChoices
       ),
-      chosenChoices: Util.filledArray(this.props.numChoices, false)
+      chosenChoices: Util.filledArray(this.props.numChoices, false),
+      isLearningMore: false
     });
   }
 
@@ -98,6 +105,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
     let startDate = MONTHS[answer.start_date.getMonth()] + " " +
                     answer.start_date.getFullYear();
     let pifInfo = null;
+    let content = null;
 
     if (answer.pif_round) {
       pifInfo = (
@@ -111,26 +119,65 @@ export default class MultipleChoices extends React.Component<Props, State> {
       );
     }
 
+    if (this.state.isLearningMore) {
+      let name = answer.first_name;
+      let gitHubURL = "https://github.com/" + answer.github;
+      let bio = null;
+
+      if (answer.bio) {
+        bio = <p>{answer.bio}</p>;
+      }
+
+      content = (
+        <div className="learn-more">
+          <h2>{answer.full_name}</h2>
+          <p>{name} is from {location} and joined in {startDate}.</p>
+          <p>{name} is <a href={gitHubURL}
+                          target="_blank">@{answer.github}</a> on GitHub.
+          </p>
+          {bio}
+          <div className="button_wrapper">
+            <button className="usa-button-primary"
+                    onClick={this.props.onCorrectAnswerChosen}>
+              Continue
+            </button>
+          </div>
+        </div>
+      );
+    } else {
+      content = (
+        <div>
+          <p>Who is this human from {location} who joined in {startDate}?</p>
+          <div>
+            {this.state.currentChoices.map((member, i) => {
+              let hasBeenChosen = this.state.chosenChoices[i];
+              let className = hasBeenChosen ? "usa-button-disabled"
+                                            : "usa-button-primary-alt";
+
+              return (
+                <div className="button_wrapper" key={i}>
+                  <button className={className} disabled={hasBeenChosen}
+                    onClick={this.handleChoiceClick.bind(this, member, i) }>
+                    {member.full_name}
+                  </button>
+                </div>
+              );
+            }) }
+          </div>
+          <div className="button_wrapper">
+            <button className="usa-button-outline"
+                    onClick={this.handleLearnMoreClick}>
+              Give up and learn more about this human
+            </button>
+          </div>
+        </div>
+      );
+    }
+
     return (
       <div className="multiple-choice-question">
         <img className="avatar" src={answer.image}/>
-        <p>Who is this human from {location} who joined in {startDate}?</p>
-        <div>
-          {this.state.currentChoices.map((member, i) => {
-            let hasBeenChosen = this.state.chosenChoices[i];
-            let className = hasBeenChosen ? "usa-button-disabled"
-                                          : "usa-button-primary-alt";
-
-            return (
-              <div className="button_wrapper" key={i}>
-                <button className={className} disabled={hasBeenChosen}
-                  onClick={this.handleChoiceClick.bind(this, member, i) }>
-                  {member.full_name}
-                </button>
-              </div>
-            );
-          }) }
-        </div>
+        {content}
         {pifInfo}
       </div>
     );

@@ -4,6 +4,8 @@ const TEAM_URL = 'team.json';
 const MS_PER_WEEK = 1000 * 60 * 60 * 24 * 7;
 
 export interface TeamMember {
+  first_name: string,
+  last_name: string,
   full_name: string,
   image: string,
   github: string,
@@ -43,6 +45,10 @@ export function get(): Promise<TeamMember[]> {
 
         if ('pif-round' in member) {
           member.pif_round = member['pif-round'];
+        }
+
+        if (/^is a/.test(member.bio)) {
+          member.bio = member.first_name + " " + member.bio;
         }
 
         return member;
