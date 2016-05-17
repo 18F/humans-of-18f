@@ -2470,5 +2470,8 @@ declare namespace JSX {
         text: React.SVGProps;
         tspan: React.SVGProps;
         use: React.SVGProps;
+
+        // Added by Atul Varma on 2016-05-17
+        animateTransform: React.SVGProps;
     }
 }
