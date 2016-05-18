@@ -4,5 +4,33 @@
 <link rel="stylesheet" href="style.css">
 <link rel="stylesheet" href="vendor/uswds/css/uswds.css">
 <title>Humans of 18F</title>
-<div id="app"></div>
+<div id="app">
+  <!-- Note that this is a copy of what is initially rendered in
+       main.tsx, so any changes should be reflected there. -->
+  <div class="usa-grid">
+    <div class="usa-width-one-whole">
+      <h1>Humans of 18F</h1>
+    </div>
+  </div>
+  <div class="usa-grid">
+    <div class="usa-width-one-third">&nbsp;</div>
+    <div class="usa-width-one-third">
+      <div class="avatar-holder loading">
+        <svg width="16" height="16" viewBox="0 0 300 300"
+             xmlns="http://www.w3.org/2000/svg" version="1.1">
+          <path d="M 150,0
+                   a 150,150 0 0,1 106.066,256.066
+                   l -35.355,-35.355
+                   a -100,-100 0 0,0 -70.711,-170.711 z"
+                fill="lightgray">
+            <animateTransform attributeName="transform" attributeType="XML"
+                   type="rotate" from="0 150 150" to="360 150 150"
+                   begin="0s" dur="1s" fill="freeze" repeatCount="indefinite" />
+          </path>
+        </svg>
+      </div>
+    </div>
+    <div class="usa-width-one-third">&nbsp;</div>
+  </div>
+</div>
 <script src="main.bundle.js"></script>
