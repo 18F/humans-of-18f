@@ -11,8 +11,11 @@
     "typings/lodash.d.ts",
     "lib/main.tsx",
     "lib/profile.tsx",
+    "lib/friendly-date.tsx",
     "lib/multiple-choices.tsx",
+    "lib/airport-code.tsx",
     "lib/chromium-throbber.tsx",
+    "lib/learn-more-info.tsx",
     "lib/avatar.tsx",
     "lib/github.ts",
     "lib/team.ts"

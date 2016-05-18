@@ -3,22 +3,10 @@ import React = require('react');
 import * as Util from './util';
 import * as Team from './team';
 
+import LearnMoreInfo from './learn-more-info';
+import FriendlyDate from './friendly-date';
+import AirportCode from './airport-code';
 import Avatar from './avatar';
-
-const MONTHS = [
-  "January",
-  "February",
-  "March",
-  "April",
-  "May",
-  "June",
-  "July",
-  "August",
-  "September",
-  "October",
-  "November",
-  "December"
-];
 
 interface Props {
   answer: Team.TeamMember,
@@ -98,14 +86,6 @@ export default class MultipleChoices extends React.Component<Props, State> {
 
   render() {
     let answer = this.props.answer;
-    let location = (
-      <a href={"https://duckduckgo.com/?q=" +
-               encodeURIComponent(answer.location) +
-               "+airport&ia=about"}
-         target="_blank">{answer.location}</a>
-    );
-    let startDate = MONTHS[answer.start_date.getMonth()] + " " +
-                    answer.start_date.getFullYear();
     let pifInfo = null;
     let content = null;
 
@@ -122,34 +102,24 @@ export default class MultipleChoices extends React.Component<Props, State> {
     }
 
     if (this.state.isLearningMore) {
-      let name = answer.first_name;
-      let gitHubURL = "https://github.com/" + answer.github;
-      let bio = null;
-
-      if (answer.bio) {
-        bio = <p>{answer.bio}</p>;
-      }
-
       content = (
-        <div className="learn-more">
-          <h2>{answer.full_name}</h2>
-          <p>This human is from {location} and joined in {startDate}.</p>
-          <p>{name} is <a href={gitHubURL}
-                          target="_blank">@{answer.github}</a> on GitHub.
-          </p>
-          {bio}
+        <LearnMoreInfo person={answer}>
           <div className="button_wrapper">
             <button className="usa-button-primary"
                     onClick={this.props.onCorrectAnswerChosen}>
               Continue
             </button>
           </div>
-        </div>
+        </LearnMoreInfo>
       );
     } else {
       content = (
         <div>
-          <p>Who is this human from {location} who joined in {startDate}?</p>
+          <p>
+            Who is this human
+            from <AirportCode airport={answer.location} /> who joined
+            in <FriendlyDate date={answer.start_date} />?
+          </p>
           <div>
             {this.state.currentChoices.map((member, i) => {
               let hasBeenChosen = this.state.chosenChoices[i];
