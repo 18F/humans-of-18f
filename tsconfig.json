@@ -12,6 +12,7 @@
     "lib/profile.tsx",
     "lib/multiple-choices.tsx",
     "lib/chromium-throbber.tsx",
+    "lib/avatar.tsx",
     "lib/team.ts"
   ],
   "exclude": [

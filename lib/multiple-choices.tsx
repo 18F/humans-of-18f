@@ -3,7 +3,7 @@ import React = require('react');
 import * as Util from './util';
 import * as Team from './team';
 
-import ChromiumThrobber from './chromium-throbber.tsx';
+import Avatar from './avatar.tsx';
 
 const MONTHS = [
   "January",
@@ -30,8 +30,7 @@ interface Props {
 interface State {
   currentChoices?: Team.TeamMember[],
   chosenChoices?: boolean[],
-  isLearningMore?: boolean,
-  isAvatarLoading?: boolean
+  isLearningMore?: boolean
 }
 
 function chooseMany<T>(answer: T, choicePool: T[], numChoices: number): T[] {
@@ -58,13 +57,8 @@ export default class MultipleChoices extends React.Component<Props, State> {
   state = {
     currentChoices: [],
     chosenChoices: [],
-    isLearningMore: false,
-    isAvatarLoading: true
+    isLearningMore: false
   };
-
-  handleAvatarLoad = () => {
-    this.setState({ isAvatarLoading: false });
-  }
 
   handleLearnMoreClick = () => {
     this.setState({ isLearningMore: true });
@@ -88,8 +82,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
         props.numChoices
       ),
       chosenChoices: Util.filledArray(this.props.numChoices, false),
-      isLearningMore: false,
-      isAvatarLoading: true
+      isLearningMore: false
     });
   }
 
@@ -115,11 +108,6 @@ export default class MultipleChoices extends React.Component<Props, State> {
                     answer.start_date.getFullYear();
     let pifInfo = null;
     let content = null;
-    let avatarHolderClassName = "avatar-holder";
-
-    if (this.state.isAvatarLoading) {
-      avatarHolderClassName += " loading";
-    }
 
     if (answer.pif_round) {
       pifInfo = (
@@ -190,10 +178,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
 
     return (
       <div className="multiple-choice-question">
-        <div className={avatarHolderClassName}>
-          {this.state.isAvatarLoading ? <ChromiumThrobber /> : null}
-          <img src={answer.image} onLoad={this.handleAvatarLoad} />
-        </div>
+        <Avatar url={answer.image} />
         {content}
         {pifInfo}
       </div>
