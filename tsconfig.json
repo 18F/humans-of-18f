@@ -13,6 +13,7 @@
     "lib/multiple-choices.tsx",
     "lib/chromium-throbber.tsx",
     "lib/avatar.tsx",
+    "lib/github.ts",
     "lib/team.ts"
   ],
   "exclude": [
