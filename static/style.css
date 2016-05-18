@@ -6,6 +6,16 @@ h1 {
   text-align: center;
 }
 
+/* The U.S. Web Design Standards apply marker stylings via li:before
+ * rather than list-style-type, so disabling them is a bit unconventional. */
+.learn-more li:before {
+  content: '';
+}
+
+.learn-more ul {
+  width: 100%;
+}
+
 .multiple-choice-question p {
   text-align: center;
 }
