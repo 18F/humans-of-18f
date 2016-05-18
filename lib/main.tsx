@@ -66,6 +66,9 @@ class App extends React.Component<Props, State> {
       />;
     }
 
+    // Note that the initial state of this component has been
+    // copied into index.html, so any changes should be reflected there.
+
     return (
       <div>
         <div className="usa-grid">
