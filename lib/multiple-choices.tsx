@@ -3,6 +3,8 @@ import React = require('react');
 import * as Util from './util';
 import * as Team from './team';
 
+import ChromiumThrobber from './chromium-throbber.tsx';
+
 const MONTHS = [
   "January",
   "February",
@@ -113,10 +115,10 @@ export default class MultipleChoices extends React.Component<Props, State> {
                     answer.start_date.getFullYear();
     let pifInfo = null;
     let content = null;
-    let avatarClassName = "avatar";
+    let avatarHolderClassName = "avatar-holder";
 
     if (this.state.isAvatarLoading) {
-      avatarClassName += " loading";
+      avatarHolderClassName += " loading";
     }
 
     if (answer.pif_round) {
@@ -188,8 +190,10 @@ export default class MultipleChoices extends React.Component<Props, State> {
 
     return (
       <div className="multiple-choice-question">
-        <img className={avatarClassName} src={answer.image}
-             onLoad={this.handleAvatarLoad} />
+        <div className={avatarHolderClassName}>
+          {this.state.isAvatarLoading ? <ChromiumThrobber /> : null}
+          <img src={answer.image} onLoad={this.handleAvatarLoad} />
+        </div>
         {content}
         {pifInfo}
       </div>
