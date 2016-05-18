@@ -1,10 +1,14 @@
+import _ = require('lodash');
+
 import {Promise} from 'es6-promise';
 
+export interface GithubRepo {
+  name: string,
+  url: string
+}
+
 export interface GithubEvent {
-  repo: {
-    name: string,
-    url: string
-  }
+  repo: GithubRepo
 }
 
 export function getEvents(username: string): Promise<GithubEvent[]> {
@@ -24,4 +28,12 @@ export function getEvents(username: string): Promise<GithubEvent[]> {
     };
     req.send(null);
   });
+}
+
+export function getUniqueRepos(events: GithubEvent[]): GithubRepo[] {
+  let repos = events.map(event => {
+    return event.repo;
+  });
+
+  return _.uniqBy(repos, repo => repo.name);
 }
