@@ -2,6 +2,7 @@ import React = require('react');
 import ReactDOM = require('react-dom');
 
 import MultipleChoices from './multiple-choices';
+import Avatar from './avatar';
 import * as Util from './util';
 import * as Team from './team';
 
@@ -16,7 +17,7 @@ interface Props {
 interface State {
   teamMembers?: Team.TeamMember[],
   currentMember?: Team.TeamMember,
-  loadingMessage?: string
+  errorMessage?: string
 }
 
 class App extends React.Component<Props, State> {
@@ -25,7 +26,7 @@ class App extends React.Component<Props, State> {
   state = {
     teamMembers: [],
     currentMember: null,
-    loadingMessage: "Loading\u2026"
+    errorMessage: null
   };
 
   setNewQuestion(members: Team.TeamMember[]) {
@@ -49,13 +50,13 @@ class App extends React.Component<Props, State> {
       console.log(e);
       this.setState({
         currentMember: null,
-        loadingMessage: "Alas, an error has occurred."
+        errorMessage: "Alas, an error has occurred."
       });
     });
   }
 
   render() {
-    let content = <span>{this.state.loadingMessage}</span>;
+    let content = null;
 
     if (this.state.currentMember) {
       content = <MultipleChoices
@@ -63,7 +64,12 @@ class App extends React.Component<Props, State> {
         answer={this.state.currentMember}
         numChoices={this.NUM_CHOICES}
         onCorrectAnswerChosen={this.handleCorrectAnswerChosen}
-      />;
+        />;
+    } else if (this.state.errorMessage) {
+      content = <span>{this.state.errorMessage}</span>;
+    } else {
+      // This is a hack for a loading throbber.
+      content = <Avatar url="" />;
     }
 
     // Note that the initial state of this component has been
