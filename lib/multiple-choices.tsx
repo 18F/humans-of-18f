@@ -3,7 +3,7 @@ import React = require('react');
 import * as Util from './util';
 import * as Team from './team';
 
-import Avatar from './avatar.tsx';
+import Avatar from './avatar';
 
 const MONTHS = [
   "January",

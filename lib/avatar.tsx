@@ -1,6 +1,6 @@
 import React = require('react');
 
-import ChromiumThrobber from './chromium-throbber.tsx';
+import ChromiumThrobber from './chromium-throbber';
 
 interface Props {
   url: string
