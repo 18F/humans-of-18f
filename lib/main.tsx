@@ -1,5 +1,6 @@
 import React = require('react');
 import ReactDOM = require('react-dom');
+import ReactCSSTransitionGroup = require('react-addons-css-transition-group');
 
 import MultipleChoices from './multiple-choices';
 import Avatar from './avatar';
@@ -59,12 +60,22 @@ class App extends React.Component<Props, State> {
     let content = null;
 
     if (this.state.currentMember) {
-      content = <MultipleChoices
-        choicePool={this.state.teamMembers}
-        answer={this.state.currentMember}
-        numChoices={this.NUM_CHOICES}
-        onCorrectAnswerChosen={this.handleCorrectAnswerChosen}
-        />;
+      content = (
+        <div className="multiple-choice-question-holder">
+          <ReactCSSTransitionGroup
+           transitionName="fade"
+           transitionEnterTimeout={300}
+           transitionLeaveTimeout={150}>
+            <MultipleChoices
+             choicePool={this.state.teamMembers}
+             answer={this.state.currentMember}
+             numChoices={this.NUM_CHOICES}
+             onCorrectAnswerChosen={this.handleCorrectAnswerChosen}
+             key={this.state.currentMember.github}
+            />
+          </ReactCSSTransitionGroup>
+        </div>
+      );
     } else if (this.state.errorMessage) {
       content = <span>{this.state.errorMessage}</span>;
     } else {

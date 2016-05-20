@@ -49,3 +49,32 @@ h1 {
   top: calc(50% - 8px);
   left: calc(50% - 8px);
 }
+
+.fade-enter {
+  opacity: 0.01;
+}
+
+.fade-enter.fade-enter-active {
+  opacity: 1;
+  transition: opacity 150ms ease-in;
+  transition-delay: 150ms;
+}
+
+.fade-leave {
+  opacity: 1;
+}
+
+.fade-leave.fade-leave-active {
+  opacity: 0.01;
+  transition: opacity 150ms ease-in;
+}
+
+.multiple-choice-question-holder {
+  position: relative;
+}
+
+.multiple-choice-question-holder .multiple-choice-question {
+  position: absolute;
+  top: 0;
+  left: 0;
+}

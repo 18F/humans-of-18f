@@ -148,7 +148,7 @@ export default class MultipleChoices extends React.Component<Props, State> {
 
     return (
       <div className="multiple-choice-question">
-        <Avatar url={answer.image} />
+        <Avatar url={answer.image} key={answer.image} />
         {content}
         {pifInfo}
       </div>
